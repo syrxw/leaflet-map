@@ -60,7 +60,7 @@ class MapDraw extends Map {
       {
         id: options.layer,
         name: options.name,
-        type: MapLayerType.WMS,
+        type: MapLayerType.type.WFS,
         renderData: [],
         renderFunc: null,
         style: options.style,
@@ -77,19 +77,18 @@ class MapDraw extends Map {
   async createWMSLayer(options) {
     // /api/geoserver/gis/wms
     const wmsLayer = window.L.tileLayer.wms(options.url, {
-      layers: options.layer.replace("gis:", ""),
+      layers: options.layer,
       format: "image/png",
       transparent: true,
       // crs: window.L.CRS.GCJ02
     });
     wmsLayer.addTo(this.map);
 
-    // 请求回来的数据是geojson  用leaflet的geojson方法进行渲染
     this.createLayer(
       {
         id: options.layer,
         name: options.name,
-        type: MapLayerType.WMS,
+        type: MapLayerType.type.WMS,
         renderData: [],
         renderFunc: null,
         style: options.style,
@@ -127,8 +126,7 @@ class MapDraw extends Map {
     let point = new this.aqsc.Point(...data.point);
     let markerPoint = new this.aqsc.MarkerCustomImg(point, {
       ...data.options,
-      imagePath: options.imagePath || "aqsc/images/marker-icon.png",
-      size: new this.aqsc.Size(...options.size),
+      imagePath: data.options.imagePath || "aqsc/images/marker-icon.png",
     });
     return markerPoint;
   }
