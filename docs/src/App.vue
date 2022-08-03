@@ -16,6 +16,9 @@ gisMap.emitter.on("mapLoaded", () => {
     url: mapConfig.wfsUrl,
     epsg: "EPSG:4326",
   });
+  MapDraw.Utils.getLocation().then((res) => {
+    console.log(res);
+  });
 });
 </script>
 

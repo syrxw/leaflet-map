@@ -1,6 +1,6 @@
 export default {
   map: {
-    mapType: "Tianditu|vec",
+    mapType: "Amap|vec_0",
     mapLevel: 14,
     mapCenter: { lng: 119.64882021, lat: 31.72553618 },
     mapOptions: {
