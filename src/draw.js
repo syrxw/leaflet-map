@@ -42,19 +42,19 @@ class MapDraw extends Map {
       request: "GetFeature",
       typeName: options.layer,
       outputFormat: "application/json",
-      // maxFeatures: 32,
       srsName: options.epsg,
+      ...options,
     };
     // /geoserver/gis/ows
     const url = options.url;
     const u = url + window.L.Util.getParamString(params, url);
     const data = await request.get(u);
 
-    const genJsonLayer = new window.L.geoJson(data, {
+    const wfsLayer = new window.L.geoJson(data, {
       style: { ...options.style, renderer: window.L.canvas() },
       onEachFeature: () => {},
     });
-    genJsonLayer.addTo(this.map.map);
+    wfsLayer.addTo(this.map.map);
 
     // 请求回来的数据是geojson  用leaflet的geojson方法进行渲染
     this.createLayer(
@@ -65,7 +65,7 @@ class MapDraw extends Map {
         renderData: [],
         renderFunc: null,
         style: options.style,
-        layer: genJsonLayer,
+        layer: wfsLayer,
       },
       true
     );
@@ -77,12 +77,14 @@ class MapDraw extends Map {
    */
   async createWMSLayer(options) {
     // /api/geoserver/gis/wms
-    const wmsLayer = window.L.tileLayer.wms(options.url, {
+    const config = {
       layers: options.layer,
       format: "image/png",
       transparent: true,
-      // crs: window.L.CRS.GCJ02
-    });
+      ...options,
+    };
+    if (options.crs) config.crs = options.crs;
+    const wmsLayer = window.L.tileLayer.wms(options.url, config);
     wmsLayer.addTo(this.map);
 
     this.createLayer(

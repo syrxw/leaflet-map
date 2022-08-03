@@ -14,6 +14,8 @@ class Map {
     this.map = null;
     // aqsc地图示例
     this.aqsc = null;
+    // 底图类型
+    this.mapType = null;
     // 地图的中心点位
     this.pt = null;
     // 地图的图层，以key作为索引存储
@@ -71,6 +73,8 @@ class Map {
     if (!LayerConfig.layer[mapType][layerType]) {
       throw new Error("错误的图层类型,正确的应为" + Object.keys(LayerConfig.layer[mapType]));
     }
+
+    this.mapType = mapType;
 
     this.destroy();
 

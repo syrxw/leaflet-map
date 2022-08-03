@@ -1,6 +1,6 @@
 {
   "name": "@osdiot/aqsc-map",
-  "version": "0.0.3-beta",
+  "version": "0.0.5-beta",
   "description": "和信二维地图组件封装",
   "main": "lib/map-cjs.js",
   "module": "lib/map-es.js",
