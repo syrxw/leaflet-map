@@ -1,5 +1,6 @@
 import Map from "./base";
 import MapLayerType from "./conf/layer";
+import request from "./utils/request";
 class MapDraw extends Map {
   constructor(config) {
     super(config);
@@ -47,7 +48,7 @@ class MapDraw extends Map {
     // /geoserver/gis/ows
     const url = options.url;
     const u = url + window.L.Util.getParamString(params, url);
-    const data = await this.$axios.get(u);
+    const data = await request.get(u);
 
     const genJsonLayer = new window.L.geoJson(data, {
       style: { ...options.style, renderer: window.L.canvas() },

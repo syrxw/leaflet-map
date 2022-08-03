@@ -5,12 +5,17 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import MapDraw from "../../lib/map-es";
-// import mapConfig from "./config/map"
+import mapConfig from "./config/map";
 
-const gisMap = new MapDraw.Map();
+const gisMap = new MapDraw.Map(mapConfig.map);
 gisMap.mount("map");
 gisMap.emitter.on("mapLoaded", () => {
-  console.log(1);
+  gisMap.createWFSLayer({
+    name: "管线1",
+    layer: "gis:hptest",
+    url: mapConfig.wfsUrl,
+    epsg: "EPSG:4326",
+  });
 });
 </script>
 

@@ -20,5 +20,5 @@ export default {
       exclude: "node_modules/**",
     }),
   ],
-  external: ["lodash-es", "mitt"],
+  external: ["lodash-es", "mitt", "axios"],
 };
