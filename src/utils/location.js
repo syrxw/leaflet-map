@@ -10,7 +10,7 @@ const defaultConfig = {
  * @param {*}enableHighAccuracy/是否需要高精度定位
  * @return {*}
  */
-const getLocation = (obj) => {
+export function getLocation(obj) {
   const { timeout, enableHighAccuracy } = { ...defaultConfig, ...obj };
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
@@ -44,7 +44,7 @@ const getLocation = (obj) => {
     }
     reject("浏览器不支持HTML5定位");
   });
-};
+}
 
 export default {
   getLocation,
