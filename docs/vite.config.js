@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api/geoserver": {
-        target: "http://192.168.6.51:8080",
+        target: "http://119.96.101.77:8081",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

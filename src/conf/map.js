@@ -1,15 +1,21 @@
 export default {
   map: {
-    mapType: "Amap|vec",
-    mapLevel: 14,
-    mapCenter: { lng: 117.285, lat: 31.8584 },
-    mapOptions: {
-      minZoom: 6,
-      maxZoom: 18,
-      enableAutoResize: true,
-      preferCanvas: true,
+    container: "map",
+    type: "GaoDe.Normal.Map",
+    center: [31.8584, 117.285],
+    zoom: 14,
+    preferCanvas: true,
+    minZoom: 6,
+    maxZoom: 18,
+  },
+  control: {
+    addAttribution: {
+      enable: false,
     },
-    mapExtra: [],
+    zoom: {
+      enable: true,
+      zoomInText: "1",
+    },
   },
   autoLocation: false, // 是否自动定位
 };

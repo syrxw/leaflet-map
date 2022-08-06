@@ -1,6 +1,7 @@
 import Map from "./base";
 import MapLayerType from "./conf/layer";
 import request from "./utils/request";
+
 class MapDraw extends Map {
   constructor(config) {
     super(config);
@@ -47,14 +48,14 @@ class MapDraw extends Map {
     };
     // /geoserver/gis/ows
     const url = options.url;
-    const u = url + window.L.Util.getParamString(params, url);
+    const u = url + L.Util.getParamString(params, url);
     const data = await request.get(u);
 
-    const wfsLayer = new window.L.geoJson(data, {
-      style: { ...options.style, renderer: window.L.canvas() },
+    const wfsLayer = new L.geoJson(data, {
+      style: { ...options.style, renderer: L.canvas() },
       onEachFeature: () => {},
     });
-    wfsLayer.addTo(this.map.map);
+    wfsLayer.addTo(this.map);
 
     // 请求回来的数据是geojson  用leaflet的geojson方法进行渲染
     this.createLayer(
@@ -84,7 +85,7 @@ class MapDraw extends Map {
       ...options,
     };
     if (options.crs) config.crs = options.crs;
-    const wmsLayer = window.L.tileLayer.wms(options.url, config);
+    const wmsLayer = L.tileLayer.wms(options.url, config);
     wmsLayer.addTo(this.map);
 
     this.createLayer(

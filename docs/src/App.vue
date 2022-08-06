@@ -4,36 +4,45 @@
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import MapDraw from "../../lib/map-es";
+import { map as drawMap, utils } from "../../lib/map-es";
 import mapConfig from "./config/map";
+import request from "./utils/request";
 
-const gisMap = new MapDraw.Map(mapConfig.map);
-gisMap.mount("map");
-gisMap.emitter.on("mapLoaded", () => {
-  gisMap.createWFSLayer({
-    name: "管线1",
-    layer: "gis:hptest",
-    url: mapConfig.wfsUrl,
-    epsg: "EPSG:4326",
-  });
-  MapDraw.Utils.getLocation().then((res) => {
-    console.log(res);
-  });
+onMounted(async () => {
+  const gisMap = drawMap.createMap(mapConfig);
+
+  // mapConfig.map.type = "TianDiTu.Satellite.Map";
+  // drawMap.addPresetTileLayer(mapConfig);
+
+  // mapConfig.map.type = "TianDiTu.Satellite.Annotion";
+  // drawMap.addPresetTileLayer(mapConfig);
+
+  drawMap.addPresetTileLayer();
+
+  // let layerGroup = drawMap.createLayerGroup();
+
+  // layerGroup.addTo(gisMap);
+
+  const params = {
+    layer: "gis:PE160_adjust",
+  };
+
+  params.url = mapConfig.wmsUrl;
+  let wmsLayer = drawMap.createWMSLayer(params);
+  wmsLayer.addTo(gisMap);
+
+  params.url = mapConfig.wfsUrl;
+  const data = await drawMap.getGeoJson(params);
+  let wfsLayer = drawMap.createWFSLayer({}, data);
+  wfsLayer.addTo(gisMap);
 });
+
+// utils.emitter.on("mapLoaded", () => {
+//   console.log("mapLoaded");
+// });
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#app img {
-  width: 100px;
-  margin-top: 20px;
-}
 * {
   margin: 0;
   padding: 0;

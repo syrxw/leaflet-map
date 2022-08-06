@@ -1,7 +1,7 @@
 {
-  "name": "@osdiot/aqsc-map",
-  "version": "0.0.6-beta",
-  "description": "和信二维地图组件封装",
+  "name": "@osdiot/leaflet-map",
+  "version": "0.0.1-beta",
+  "description": "基于leaflet.js的二次封装",
   "main": "lib/map-cjs.js",
   "module": "lib/map-es.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://192.168.6.20:81/osdiot/business_framework/osdwk-fronted/npm-packages/aqsc-map"
+    "url": "http://192.168.6.20:81/osdiot/business_framework/osdwk-fronted/npm-packages/leaflet-map"
   },
   "keywords": [
     "map"
@@ -20,6 +20,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
+    "leaflet": "^1.8.0",
+    "leaflet.chinatmsproviders": "^3.0.6",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.0"
   },

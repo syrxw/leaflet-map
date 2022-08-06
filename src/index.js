@@ -1,10 +1,11 @@
-import Map from "./draw";
-import MapDefaultConfig from "./conf/map";
-import LayerConfig from "./conf/layer";
-import Utils from "./utils";
-export default {
-  Map,
-  MapDefaultConfig,
-  LayerConfig,
-  Utils,
+import * as base from "./base";
+import * as layer from "./layer";
+
+import * as utils from "./utils";
+
+const map = {
+  ...base,
+  ...layer,
 };
+
+export { map, utils };

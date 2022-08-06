@@ -20,5 +20,12 @@ export default {
       exclude: "node_modules/**",
     }),
   ],
-  external: ["lodash-es", "mitt", "axios"],
+  external: [
+    "lodash-es",
+    "mitt",
+    "axios",
+    "leaflet",
+    "leaflet/dist/leaflet.css",
+    "leaflet.chinatmsproviders",
+  ],
 };

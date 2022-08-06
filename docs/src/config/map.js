@@ -1,15 +1,21 @@
 export default {
   map: {
-    mapType: "Amap|vec_0",
-    mapLevel: 14,
-    mapCenter: { lng: 119.64882021, lat: 31.72553618 },
-    mapOptions: {
-      minZoom: 6,
-      maxZoom: 18,
-      enableAutoResize: true,
-      preferCanvas: true,
+    container: "map",
+    type: "GaoDe.Normal.Map",
+    center: [29.50410173, 109.40256809],
+    zoom: 18,
+    preferCanvas: true,
+    minZoom: 6,
+    maxZoom: 18,
+  },
+  control: {
+    addAttribution: {
+      enable: false,
     },
-    mapExtra: ["turf", "plotting", "lasso"],
+    zoom: {
+      enable: true,
+      zoomInText: "1",
+    },
   },
   wmsUrl: "/api/geoserver/gis/wms",
   wfsUrl: "/geoserver/gis/ows",
