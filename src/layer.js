@@ -56,3 +56,5 @@ export function createWMSLayer(options) {
   const wmsLayer = L.tileLayer.wms(options.url, config);
   return wmsLayer;
 }
+
+export function createImgPoint() {}
