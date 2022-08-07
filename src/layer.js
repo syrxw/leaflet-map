@@ -48,8 +48,6 @@ export function createWMSLayer(options) {
     layers: options.layer,
     format: "image/png",
     transparent: true,
-    zoomOffset: 100,
-    detectRetina: true,
     ...options,
   };
   if (options.crs) config.crs = options.crs;

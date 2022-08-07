@@ -14,7 +14,6 @@ export default {
     },
     zoom: {
       enable: true,
-      zoomInText: "1",
     },
   },
   autoLocation: false, // 是否自动定位
