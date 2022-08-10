@@ -1,6 +1,15 @@
 // rollup.config.js
 import babel from "rollup-plugin-babel";
 import nodeResolve from "@rollup/plugin-node-resolve";
+import alias from "@rollup/plugin-alias";
+
+import path from "path";
+
+const customResolver = nodeResolve({
+  extensions: [".mjs", ".js", ".jsx", ".json", ".sass", ".scss"],
+});
+const projectRootDir = path.resolve(__dirname);
+
 export default {
   input: "src/index.js",
   output: [
@@ -15,6 +24,16 @@ export default {
     },
   ],
   plugins: [
+    alias({
+      entries: [
+        {
+          find: "@",
+          replacement: path.resolve(projectRootDir, "src"),
+          // OR place `customResolver` here. See explanation below.
+        },
+      ],
+      customResolver,
+    }),
     nodeResolve(),
     babel({
       exclude: "node_modules/**",

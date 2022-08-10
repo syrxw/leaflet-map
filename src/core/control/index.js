@@ -1,5 +1,5 @@
-import config from "./conf/map";
-import emitter from "./utils/emitter";
+import config from "@/conf/map";
+import emitter from "@/utils/emitter";
 
 let mapInstance;
 /**

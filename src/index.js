@@ -1,7 +1,7 @@
-import * as base from "./base";
-import * as layer from "./layer";
+import * as base from "@/core/base";
+import * as layer from "@/core/layer";
 
-import * as utils from "./utils";
+import * as utils from "@/utils";
 
 const map = {
   ...base,

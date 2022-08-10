@@ -8,6 +8,8 @@ import { map as drawMap, utils } from "../../lib/map-es";
 import mapConfig from "./config/map";
 import request from "./utils/request";
 
+// import "./plugins/leaflet-tilelayer-colorizr";
+
 onMounted(async () => {
   const gisMap = drawMap.createMap(mapConfig);
 
@@ -52,5 +54,10 @@ onMounted(async () => {
   height: 100vh;
 
   z-index: 1;
+}
+
+.leaflet-zoom-animated img {
+  filter: brightness(0.88) contrast(1.22) grayscale(0) hue-rotate(360deg) opacity(1) saturate(1.1)
+    sepia(0.54) invert(0.9);
 }
 </style>
