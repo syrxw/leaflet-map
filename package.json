@@ -1,6 +1,6 @@
 {
   "name": "@osdiot/leaflet-map",
-  "version": "0.0.2-beta",
+  "version": "0.0.3-beta",
   "description": "基于leaflet.js的二次封装",
   "main": "lib/map-cjs.js",
   "module": "lib/map-es.js",

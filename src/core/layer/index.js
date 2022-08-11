@@ -1,14 +1,5 @@
 import request from "@/utils/request";
 
-/**
- * 创建渲染图层
- * @param {*} options 图层参数
- * @param {*} isPure 是否虚拟生成图层信息
- */
-export function createLayerGroup(options) {
-  return L.layerGroup(options);
-}
-
 export async function getGeoJson(options) {
   // 向geoserver请求数据
   let params = {

@@ -30,13 +30,33 @@ onMounted(async () => {
   };
 
   params.url = mapConfig.wmsUrl;
-  let wmsLayer = drawMap.createWMSLayer(params);
+  let wmsLayer = drawMap.layer.createWMSLayer(params);
   wmsLayer.addTo(gisMap);
 
   params.url = mapConfig.wfsUrl;
-  const data = await drawMap.getGeoJson(params);
-  let wfsLayer = drawMap.createWFSLayer({}, data);
+  const data = await drawMap.layer.getGeoJson(params);
+  let wfsLayer = drawMap.layer.createWFSLayer({}, data);
   wfsLayer.addTo(gisMap);
+
+  try {
+    const searchData = await drawMap.service.localSearch(gisMap, {
+      tk: mapConfig.map.key,
+      keyWord: "软件公司",
+    });
+
+    const locationData = await drawMap.service.getLocation({
+      tk: mapConfig.map.key,
+      keyWord: "软件公司",
+    });
+
+    const pointData = await drawMap.service.getPoint({
+      tk: mapConfig.map.key,
+      lon: 109.40256809,
+      lat: 29.50410173,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // utils.emitter.on("mapLoaded", () => {

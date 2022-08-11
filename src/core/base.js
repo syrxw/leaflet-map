@@ -34,7 +34,6 @@ export function createMap(options = config) {
  */
 export function addPresetTileLayer(options = config) {
   const { map: mapConfig } = options;
-  mapConfig.key = "6cb11577e3ac27bbe015669e413f6cc4";
   L.tileLayer
     .chinaProvider(mapConfig.type, {
       ...mapConfig,

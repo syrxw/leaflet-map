@@ -7,6 +7,7 @@ export default {
     preferCanvas: true,
     minZoom: 6,
     maxZoom: 18,
+    key: "6cb11577e3ac27bbe015669e413f6cc4",
   },
   control: {
     addAttribution: {
