@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 export default defineConfig({
   plugins: [vue()],
   server: {
+    port: 7999,
     proxy: {
       "/api/geoserver": {
         target: "http://119.96.101.77:8081",

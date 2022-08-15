@@ -19,7 +19,7 @@ onMounted(async () => {
   // mapConfig.map.type = "TianDiTu.Satellite.Annotion";
   // drawMap.addPresetTileLayer(mapConfig);
 
-  drawMap.addPresetTileLayer();
+  drawMap.addPresetTileLayer(mapConfig);
 
   // let layerGroup = drawMap.createLayerGroup();
 

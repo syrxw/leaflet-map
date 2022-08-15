@@ -5,10 +5,10 @@ let mapInstance;
 /**
  * 控件模块
  */
-export function setControl(instance) {
+export function setControl(instance, options = config) {
   mapInstance = instance;
 
-  const { addAttribution: addAttributionConfig, zoom: zoomConfig } = config.control;
+  const { addAttribution: addAttributionConfig, zoom: zoomConfig } = options.control;
 
   // 水印信息加载
   if (addAttributionConfig.enable) {

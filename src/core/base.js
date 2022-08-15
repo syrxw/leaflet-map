@@ -1,6 +1,6 @@
 import "leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet.chinatmsproviders"; // 国内地图底图加载
+import "@/plugins/leaflet.ChineseTmsProviders"; // 国内地图底图加载
 import "@/plugins/leaflet.mapCorrection"; // 坐标地图纠偏
 
 import config from "@/conf/map";
@@ -21,7 +21,7 @@ export function createMap(options = config) {
     ...mapConfig,
   });
 
-  setControl(mapInstance);
+  setControl(mapInstance, options);
 
   emitter.emit("mapLoaded");
 

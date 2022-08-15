@@ -1,8 +1,8 @@
 export default {
   map: {
     container: "map",
-    type: "GaoDe.Satellite.Map",
-    center: [29.50410173, 109.40256809],
+    type: "GaoDe.Brief.Map",
+    center: [31.820591, 117.227219],
     zoom: 12,
     preferCanvas: true,
     minZoom: 6,
@@ -14,8 +14,7 @@ export default {
       enable: false,
     },
     zoom: {
-      enable: true,
-      zoomInText: "1",
+      enable: false,
     },
   },
   wmsUrl: "/api/geoserver/gis/wms",
