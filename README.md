@@ -121,10 +121,11 @@ onMounted(() => {
 | createWFSLayer(`options`,`data`) | geoJsonLayer  | 创建WFS图层  `options`是L.geojson 参数  `data` 是geojson数据 |
 | createWMSLayer(`options`)        | tileLayer     | 创建WMS图层  `options`是L.tileLayer.wms 参数                 |
 
-#### map.localSearch
+#### map.service
 
 | 方法名                       | 返回值        | 描述                                                                                                                                              |
 | :--------------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------ |
 | localSearch(`map`,`options`) | Promise(data) | POI位置搜索（基于[天地图地名搜索2.0](http://lbs.tianditu.gov.cn/server/search2.html)）`map` 是地图实例对象，`options` 是天地图该api的所需配置参数 |
 | getLocation(`options`)       | -             | 地理位置解析经纬度 基于[地理位置解析查询](http://lbs.tianditu.gov.cn/server/geocodinginterface.html)   `options` 是天地图该api的所需配置参数      |
 | getPoint(`options`)          | -             | 逆地理位置解析 基于[逆地理编码查询](http://lbs.tianditu.gov.cn/server/geocoding.html)    `options` 是天地图该api的所需配置参数                    |
+| getLocationByIp()            | Promise(data) | 根据IP获取地理位置                                                                                                                                |

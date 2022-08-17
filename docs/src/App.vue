@@ -18,10 +18,10 @@ onMounted(async () => {
   await drawMap.service
     .getLocationByIp()
     .then((res) => {
-      if (res) {
-        mapConfig.map.center = [res.lat, res.lng];
+      if (res.code === 200) {
+        mapConfig.map.center = [res.data.lat, res.data.lng];
+        mapInit();
       }
-      mapInit();
     })
     .catch((e) => {
       mapInit();
