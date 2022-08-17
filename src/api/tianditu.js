@@ -35,3 +35,7 @@ export function geocoderPoint(params) {
     },
   });
 }
+
+export function getLocation() {
+  return request.get("https://map.tianditu.gov.cn/data/getCityName");
+}

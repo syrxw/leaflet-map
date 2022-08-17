@@ -9,17 +9,29 @@ import mapConfig from "./config/map";
 import request from "./utils/request";
 
 // import "./plugins/leaflet-tilelayer-colorizr";
-
+let gisMap;
+function mapInit() {
+  gisMap = drawMap.createMap(mapConfig);
+  drawMap.addPresetTileLayer(mapConfig);
+}
 onMounted(async () => {
-  const gisMap = drawMap.createMap(mapConfig);
+  await drawMap.service
+    .getLocationByIp()
+    .then((res) => {
+      if (res) {
+        mapConfig.map.center = [res.lat, res.lng];
+      }
+      mapInit();
+    })
+    .catch((e) => {
+      mapInit();
+    });
 
   // mapConfig.map.type = "TianDiTu.Satellite.Map";
   // drawMap.addPresetTileLayer(mapConfig);
 
   // mapConfig.map.type = "TianDiTu.Satellite.Annotion";
   // drawMap.addPresetTileLayer(mapConfig);
-
-  drawMap.addPresetTileLayer(mapConfig);
 
   // let layerGroup = drawMap.createLayerGroup();
 
@@ -54,6 +66,8 @@ onMounted(async () => {
       lon: 109.40256809,
       lat: 29.50410173,
     });
+
+    const testData = await drawMap.service.getLocationByIp();
   } catch (error) {
     console.log(error);
   }

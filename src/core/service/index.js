@@ -46,3 +46,17 @@ export async function getPoint(options) {
 
   return data;
 }
+
+// 根据ip获取位置
+export async function getLocationByIp(params) {
+  try {
+    const data = await api.tianditu.getLocation();
+    if (data.code === 200) {
+      return data.data;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
