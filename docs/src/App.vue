@@ -5,6 +5,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 import { map as drawMap, utils } from "../../lib/map-es";
+import "../../lib/map-es.css";
 import mapConfig from "./config/map";
 import request from "./utils/request";
 
@@ -26,6 +27,20 @@ onMounted(async () => {
     .catch((e) => {
       mapInit();
     });
+
+  // drawMap.measure.polyline.initialize(gisMap);
+  // drawMap.measure.polyline.enable();
+  // drawMap.measure.polyline.disable();
+
+  // drawMap.measure.polygon.initialize(gisMap);
+  // drawMap.measure.polygon.enable();
+
+  drawMap.measure.rectangle.initialize(gisMap);
+  drawMap.measure.rectangle.enable();
+
+  // utils.emitter.on("measure.circle.created", (e) => {
+  //   console.log(e);
+  // });
 
   // mapConfig.map.type = "TianDiTu.Satellite.Map";
   // drawMap.addPresetTileLayer(mapConfig);
@@ -88,6 +103,10 @@ onMounted(async () => {
   height: 100vh;
 
   z-index: 1;
+}
+
+.measure-tooltip {
+  pointer-events: all;
 }
 
 .leaflet-zoom-animated img {

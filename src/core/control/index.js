@@ -8,7 +8,11 @@ let mapInstance;
 export function setControl(instance, options = config) {
   mapInstance = instance;
 
-  const { addAttribution: addAttributionConfig, zoom: zoomConfig } = options.control;
+  const {
+    addAttribution: addAttributionConfig,
+    zoom: zoomConfig,
+    scale: scaleConfig,
+  } = options.control;
 
   // 水印信息加载
   if (addAttributionConfig.enable) {
@@ -18,6 +22,11 @@ export function setControl(instance, options = config) {
   // 缩放控件加载
   if (zoomConfig.enable) {
     addZoomControl(zoomConfig);
+  }
+
+  // 比例尺加载加载
+  if (scaleConfig.enable) {
+    addScaleControl(scaleConfig);
   }
 
   emitter.emit("controlLoaded");
@@ -48,4 +57,15 @@ function addZoomControl(options) {
   };
   const zoomControl = L.control.zoom(mergeOptions);
   mapInstance.addControl(zoomControl);
+}
+
+/**
+ * 比例尺控件
+ */
+function addScaleControl(options) {
+  const mergeOptions = {
+    ...options,
+  };
+  const scaleControl = L.control.scale(mergeOptions);
+  mapInstance.addControl(scaleControl);
 }

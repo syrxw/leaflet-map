@@ -4,7 +4,7 @@ export default {
     type: "GaoDe.Brief.Map",
     center: [31.820591, 117.227219],
     zoom: 12,
-    preferCanvas: true,
+    // preferCanvas: true,
     minZoom: 6,
     maxZoom: 18,
     key: "6cb11577e3ac27bbe015669e413f6cc4",
@@ -14,6 +14,9 @@ export default {
       enable: false,
     },
     zoom: {
+      enable: false,
+    },
+    scale: {
       enable: false,
     },
   },

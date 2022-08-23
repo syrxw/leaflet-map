@@ -64,6 +64,9 @@ const mapConfig = {
     zoom: {
       enable: false, // 是否开启缩放组件
     },
+    scale: {
+      enable: false, // 是否开启比例尺
+    },
   },
 };
 ``` 

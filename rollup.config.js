@@ -2,6 +2,8 @@
 import babel from "rollup-plugin-babel";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import alias from "@rollup/plugin-alias";
+import scss from "rollup-plugin-scss";
+import dartSass from "sass";
 
 import path from "path";
 
@@ -34,6 +36,7 @@ export default {
       ],
       customResolver,
     }),
+    scss({ include: /\.scss$/, sass: dartSass }),
     nodeResolve(),
     babel({
       exclude: "node_modules/**",
@@ -45,6 +48,8 @@ export default {
     "axios",
     "leaflet",
     "leaflet/dist/leaflet.css",
+    "leaflet-draw",
+    "leaflet-draw/dist/leaflet.draw-src.css",
     "leaflet.chinatmsproviders",
   ],
 };

@@ -1,7 +1,7 @@
 import "leaflet";
 import "leaflet/dist/leaflet.css";
-import "@/plugins/leaflet.ChineseTmsProviders"; // 国内地图底图加载
-import "@/plugins/leaflet.mapCorrection"; // 坐标地图纠偏
+import "@/plugin/leaflet.ChineseTmsProviders"; // 国内地图底图加载
+import "@/plugin/leaflet.mapCorrection"; // 坐标地图纠偏
 
 import config from "@/conf/map";
 import emitter from "@/utils/emitter";
