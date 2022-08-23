@@ -6,22 +6,18 @@ import "@/plugin/leaflet.mapCorrection"; // 坐标地图纠偏
 import config from "@/conf/map";
 import emitter from "@/utils/emitter";
 
-import { setControl } from "@/core/control";
-
 let mapInstance = null;
 
 /**
  * 创建地图
  */
 export function createMap(options = config) {
-  const { map: mapConfig, control: controlConfig } = options;
+  const { map: mapConfig } = options;
   mapInstance = L.map(mapConfig.container, {
-    attributionControl: controlConfig.addAttribution.enable,
+    attributionControl: false,
     zoomControl: false,
     ...mapConfig,
   });
-
-  setControl(mapInstance, options);
 
   emitter.emit("mapLoaded");
 

@@ -14,6 +14,11 @@ let gisMap;
 function mapInit() {
   gisMap = drawMap.createMap(mapConfig);
   drawMap.addPresetTileLayer(mapConfig);
+
+  gisMap
+    .addControl(drawMap.control.attributionControl())
+    .addControl(drawMap.control.zoomControl())
+    .addControl(drawMap.control.scaleControl());
 }
 onMounted(async () => {
   await drawMap.service
