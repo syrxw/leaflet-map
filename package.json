@@ -25,7 +25,8 @@
     "leaflet-draw": "^1.0.4",
     "leaflet.chinatmsproviders": "^3.0.6",
     "lodash-es": "^4.17.21",
-    "mitt": "^3.0.0"
+    "mitt": "^3.0.0",
+    "nanoid": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.9",

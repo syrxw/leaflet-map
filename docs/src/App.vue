@@ -1,4 +1,10 @@
 <template>
+  <div class="op">
+    <button @click="toggleLines">画线</button>
+    <button @click="togglePolygon">画面</button>
+    <button @click="toggleCircle">画圆</button>
+    <button @click="toggleRentangle">画方</button>
+  </div>
   <div id="map"></div>
 </template>
 
@@ -20,6 +26,27 @@ function mapInit() {
     .addControl(drawMap.control.zoomControl())
     .addControl(drawMap.control.scaleControl());
 }
+
+function toggleLines() {
+  drawMap.measure.polyline.initialize(gisMap);
+  drawMap.measure.polyline.enable();
+}
+
+function togglePolygon() {
+  drawMap.measure.polygon.initialize(gisMap);
+  drawMap.measure.polygon.enable();
+}
+
+function toggleCircle() {
+  drawMap.measure.circle.initialize(gisMap);
+  drawMap.measure.circle.enable();
+}
+
+function toggleRentangle() {
+  drawMap.measure.rectangle.initialize(gisMap);
+  drawMap.measure.rectangle.enable();
+}
+
 onMounted(async () => {
   await drawMap.service
     .getLocationByIp()
@@ -33,15 +60,11 @@ onMounted(async () => {
       mapInit();
     });
 
-  // drawMap.measure.polyline.initialize(gisMap);
-  // drawMap.measure.polyline.enable();
-  // drawMap.measure.polyline.disable();
-
   // drawMap.measure.polygon.initialize(gisMap);
   // drawMap.measure.polygon.enable();
 
-  drawMap.measure.rectangle.initialize(gisMap);
-  drawMap.measure.rectangle.enable();
+  // drawMap.measure.rectangle.initialize(gisMap);
+  // drawMap.measure.rectangle.enable();
 
   // utils.emitter.on("measure.circle.created", (e) => {
   //   console.log(e);
@@ -110,12 +133,15 @@ onMounted(async () => {
   z-index: 1;
 }
 
-.measure-tooltip {
-  pointer-events: all;
-}
-
 .leaflet-zoom-animated img {
   filter: brightness(0.88) contrast(1.22) grayscale(0) hue-rotate(360deg) opacity(1) saturate(1.1)
     sepia(0.54) invert(0.9);
+}
+
+.op {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
 }
 </style>

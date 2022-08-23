@@ -46,6 +46,7 @@ export default {
     "lodash-es",
     "mitt",
     "axios",
+    "nanoid",
     "leaflet",
     "leaflet/dist/leaflet.css",
     "leaflet-draw",

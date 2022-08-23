@@ -2,27 +2,38 @@ import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw-src.css";
 import "./locale";
 import "@/style/index.scss";
+import emitter from "@/utils/emitter";
+
+import { nanoid } from "nanoid";
 
 let mapInstance;
+let layerGroup;
+let drawControl;
 let polygonDrawer;
+
+let drawlayer = {};
+
+let currentLayerId = null;
 function enable() {
   polygonDrawer = new L.Draw.Polygon(mapInstance, drawControl.options.draw.polygon);
   polygonDrawer.enable();
 }
 
 function disable() {
-  polygonDrawer.disable();
+  polygonDrawer?.disable();
 }
 
-let pointLayerGroup;
-let layerGroup;
-let drawControl;
 function initialize(instance, options) {
   mapInstance = instance;
   layerGroup = new L.FeatureGroup();
-  pointLayerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
-  mapInstance.addLayer(pointLayerGroup);
+
+  // 初始化图层数据
+  currentLayerId = nanoid();
+  drawlayer[currentLayerId] = {
+    point: new L.FeatureGroup(),
+    shape: new L.FeatureGroup(),
+  };
 
   drawControl = new L.Control.Draw({
     edit: {
@@ -46,10 +57,13 @@ function initialize(instance, options) {
   });
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
-    let drawlayer = event.layer;
-    let latlng = drawlayer.getLatLngs()[0];
-    layerGroup.addLayer(drawlayer);
+    event.layer.id = currentLayerId;
+    drawlayer[currentLayerId].shape = event.layer;
+    let latlng = drawlayer[currentLayerId].shape.getLatLngs()[0];
+    layerGroup.addLayer(drawlayer[currentLayerId].shape);
+
     addMeasureMarker(latlng);
+    emitter.emit("measure.polygon.created", event);
   });
   mapInstance.off(L.Draw.Event.DRAWVERTEX);
 }
@@ -57,20 +71,27 @@ function initialize(instance, options) {
 function addMeasureMarker(latlng) {
   const marker = L.marker(latlng[0], { icon: L.divIcon({ className: "my-div-icon" }) });
   marker
-    .bindTooltip(buildHtml(`${formatArea(latlng)}<div onclick="polygon.deleteLine()">删除</div>`), {
-      permanent: true,
-      direction: "right",
-      className: "measure-tooltip",
-    })
+    .bindTooltip(
+      buildHtml(
+        `${formatArea(latlng)}<div onclick="polygon.deleteLine('${currentLayerId}')">删除</div>`
+      ),
+      {
+        permanent: true,
+        direction: "right",
+        className: "measure-tooltip",
+      }
+    )
     .openTooltip();
 
-  pointLayerGroup.addLayer(marker);
+  drawlayer[currentLayerId].point.addLayer(marker);
+  drawlayer[currentLayerId].point.addTo(mapInstance);
 }
 
 window.polygon = {};
-window.polygon.deleteLine = function (e) {
-  pointLayerGroup.remove();
-  layerGroup.remove();
+window.polygon.deleteLine = function (id) {
+  Object.keys(drawlayer[id]).forEach((item) => {
+    drawlayer[id][item].remove();
+  });
 };
 
 function buildHtml(content) {

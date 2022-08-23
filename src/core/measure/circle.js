@@ -5,26 +5,36 @@ import "@/style/index.scss";
 
 import emitter from "@/utils/emitter";
 
+import { nanoid } from "nanoid";
+
 let mapInstance;
+let layerGroup;
+let drawControl;
 let circleDrawer;
+
+let drawlayer = {};
+
+let currentLayerId = null;
 function enable() {
   circleDrawer = new L.Draw.Circle(mapInstance, drawControl.options.draw.circle);
   circleDrawer.enable();
 }
 
 function disable() {
-  circleDrawer.disable();
+  circleDrawer?.disable();
 }
 
-let pointLayerGroup;
-let layerGroup;
-let drawControl;
 function initialize(instance, options) {
   mapInstance = instance;
   layerGroup = new L.FeatureGroup();
-  pointLayerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
-  mapInstance.addLayer(pointLayerGroup);
+
+  // 初始化图层数据
+  currentLayerId = nanoid();
+  drawlayer[currentLayerId] = {
+    point: new L.FeatureGroup(),
+    shape: new L.FeatureGroup(),
+  };
 
   drawControl = new L.Control.Draw({
     edit: {
@@ -48,9 +58,12 @@ function initialize(instance, options) {
   });
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
-    let drawlayer = event.layer;
-    layerGroup.addLayer(drawlayer);
-    addMeasureMarker(drawlayer._mRadius, drawlayer._latlng);
+    event.layer.id = currentLayerId;
+    drawlayer[currentLayerId].shape = event.layer;
+    layerGroup.addLayer(drawlayer[currentLayerId].shape);
+
+    addMeasureMarker(event.layer._mRadius, event.layer._latlng);
+    emitter.emit("measure.circle.created", event);
   });
   mapInstance.off(L.Draw.Event.DRAWVERTEX);
 }
@@ -58,20 +71,27 @@ function initialize(instance, options) {
 function addMeasureMarker(radius, latlng) {
   const marker = L.marker(latlng, { icon: L.divIcon({ className: "my-div-icon" }) });
   marker
-    .bindTooltip(buildHtml(`${formatArea(radius)}<div onclick="circle.deleteLine()">删除</div>`), {
-      permanent: true,
-      direction: "right",
-      className: "measure-tooltip",
-    })
+    .bindTooltip(
+      buildHtml(
+        `${formatArea(radius)}<div onclick="circle.deleteLine('${currentLayerId}')">删除</div>`
+      ),
+      {
+        permanent: true,
+        direction: "right",
+        className: "measure-tooltip",
+      }
+    )
     .openTooltip();
 
-  pointLayerGroup.addLayer(marker);
+  drawlayer[currentLayerId].point.addLayer(marker);
+  drawlayer[currentLayerId].point.addTo(mapInstance);
 }
 
 window.circle = {};
-window.circle.deleteLine = function (e) {
-  pointLayerGroup.remove();
-  layerGroup.remove();
+window.circle.deleteLine = function (id) {
+  Object.keys(drawlayer[id]).forEach((item) => {
+    drawlayer[id][item].remove();
+  });
 };
 
 function buildHtml(content) {

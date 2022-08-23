@@ -2,11 +2,17 @@ import "leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw-src.css";
 import "./locale";
 import "@/style/index.scss";
+import emitter from "@/utils/emitter";
+
+import { nanoid } from "nanoid";
 
 let mapInstance;
 let layerGroup;
 let drawControl;
 let polylineDrawer;
+
+let drawlayer = {};
+let currentLayerId = null;
 
 function enable() {
   polylineDrawer = new L.Draw.Polyline(mapInstance, drawControl.options.draw.polyline);
@@ -14,13 +20,20 @@ function enable() {
 }
 
 function disable() {
-  polylineDrawer.disable();
+  polylineDrawer?.disable();
 }
 
 function initialize(instance, options) {
   mapInstance = instance;
   layerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
+
+  // 初始化图层数据
+  currentLayerId = nanoid();
+  drawlayer[currentLayerId] = {
+    point: new L.FeatureGroup(),
+    shape: new L.FeatureGroup(),
+  };
 
   drawControl = new L.Control.Draw({
     edit: {
@@ -46,15 +59,16 @@ function initialize(instance, options) {
   });
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
-    let drawlayer = event.layer;
-    layerGroup.addLayer(drawlayer);
+    event.layer.id = currentLayerId;
+    drawlayer[currentLayerId].shape = event.layer;
 
-    if (pointLayerGroup) {
-      setTimeout(() => {
-        drawEndPoint();
-        mapInstance.addLayer(pointLayerGroup);
-      }, 0);
-    }
+    layerGroup.addLayer(drawlayer[currentLayerId].shape);
+
+    setTimeout(() => {
+      drawEndPoint();
+    }, 0);
+
+    emitter.emit("measure.polyline.created", event);
   });
 
   mapInstance.off(L.Draw.Event.DRAWVERTEX).on(L.Draw.Event.DRAWVERTEX, function (event) {
@@ -62,12 +76,10 @@ function initialize(instance, options) {
   });
 }
 
-let pointLayerGroup;
 function drawPoint(layerGroup) {
-  let i = 0;
   let lines = [];
+
   layerGroup.eachLayer((e) => {
-    i += 1;
     lines.push(e._latlng);
 
     let content = lines.length <= 1 ? buildHtml("起点") : buildHtml(formatLength(lines));
@@ -77,34 +89,41 @@ function drawPoint(layerGroup) {
       className: "measure-tooltip",
     }).openTooltip();
   });
-  pointLayerGroup = layerGroup;
+
+  drawlayer[currentLayerId].point = layerGroup;
 }
 
 function drawEndPoint() {
   let i = 0;
   let lines = [];
 
-  if (pointLayerGroup) {
-    pointLayerGroup.eachLayer((e) => {
+  const point = drawlayer[currentLayerId].point;
+  if (point) {
+    point.eachLayer((e) => {
       i += 1;
       lines.push(e._latlng);
-      if (i === Object.keys(pointLayerGroup._layers).length) {
+      if (i === Object.keys(point._layers).length) {
         e.setTooltipContent(
           buildHtml(
-            `共${formatLength(lines)}<div onclick="polyline.deleteLine(${
-              e._leaflet_id
-            })">删除</div>`
+            "共" +
+              formatLength(lines) +
+              "<div onclick='polyline.deleteLine(\"" +
+              currentLayerId +
+              "\")'>删除</div>"
           )
         );
       }
     });
   }
+
+  mapInstance.addLayer(point);
 }
 
 window.polyline = {};
-window.polyline.deleteLine = function () {
-  pointLayerGroup.remove();
-  layerGroup.remove();
+window.polyline.deleteLine = function (id) {
+  Object.keys(drawlayer[id]).forEach((item) => {
+    drawlayer[id][item].remove();
+  });
 };
 
 function buildHtml(content) {
