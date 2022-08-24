@@ -8,7 +8,7 @@
 
 ### 使用前
 
-因为是基于Leaflet的二次封装，必须先熟练掌握Leaflet的使用
+因为是基于Leaflet的二次封装，必须先熟练掌握Leaflet的使用,[文档地址](https://leafletjs.cn/reference-1.8.0.html)
 
 ### 安装
 
