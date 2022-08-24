@@ -12,9 +12,9 @@ let layerGroup;
 let drawControl;
 let rectangleDrawer;
 
-let drawlayer = {};
-
+let drawLayer = {};
 let currentLayerId = null;
+
 function enable() {
   rectangleDrawer = new L.Draw.Rectangle(mapInstance, drawControl.options.draw.rectangle);
   rectangleDrawer.enable();
@@ -24,14 +24,15 @@ function disable() {
   rectangleDrawer?.disable();
 }
 
-function initialize(instance, options) {
+function initialize(instance, options = { showMarker: false }) {
   mapInstance = instance;
+
   layerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
 
   // 初始化图层数据
   currentLayerId = nanoid();
-  drawlayer[currentLayerId] = {
+  drawLayer[currentLayerId] = {
     point: new L.FeatureGroup(),
     shape: new L.FeatureGroup(),
   };
@@ -60,22 +61,25 @@ function initialize(instance, options) {
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
     event.layer.id = currentLayerId;
-    drawlayer[currentLayerId].shape = event.layer;
-    let latlng = drawlayer[currentLayerId].shape.getLatLngs()[0];
-    layerGroup.addLayer(drawlayer[currentLayerId].shape);
+    drawLayer[currentLayerId].shape = event.layer;
+    layerGroup.addLayer(drawLayer[currentLayerId].shape);
 
-    addMeasureMarker(latlng, drawlayer[currentLayerId].shape.getCenter());
+    let latlng = drawLayer[currentLayerId].shape.getLatLngs()[0];
+    if (options.showMarker) {
+      addMeasureMarker(latlng, drawLayer[currentLayerId].shape.getCenter());
+    }
+
     emitter.emit("measure.rectangle.created", event);
   });
   mapInstance.off(L.Draw.Event.DRAWVERTEX);
 }
 
 function addMeasureMarker(latlng, center) {
-  const marker = L.marker(center, { icon: L.divIcon({ className: "my-div-icon" }) });
+  const marker = L.marker(center, { icon: L.divIcon({ className: "measure-div-icon" }) });
   marker
     .bindTooltip(
       buildHtml(
-        `${formatArea(latlng)}<div onclick="rectangle.deleteLine('${currentLayerId}')">删除</div>`
+        `${formatArea(latlng)}<div onclick="rectangle.remove('${currentLayerId}')">删除</div>`
       ),
       {
         permanent: true,
@@ -85,16 +89,23 @@ function addMeasureMarker(latlng, center) {
     )
     .openTooltip();
 
-  drawlayer[currentLayerId].point.addLayer(marker);
-  drawlayer[currentLayerId].point.addTo(mapInstance);
+  drawLayer[currentLayerId].point.addLayer(marker);
+  drawLayer[currentLayerId].point.addTo(mapInstance);
 }
 
-window.rectangle = {};
-window.rectangle.deleteLine = function (id) {
-  Object.keys(drawlayer[id]).forEach((item) => {
-    drawlayer[id][item].remove();
+function remove(id) {
+  Object.keys(drawLayer[id]).forEach((item) => {
+    drawLayer[id][item].remove();
   });
-};
+}
+
+function removeAll() {
+  Object.keys(drawLayer).forEach((item) => {
+    Object.keys(drawLayer[item]).forEach((sitem) => {
+      drawLayer[item][sitem].remove();
+    });
+  });
+}
 
 function buildHtml(content) {
   return `<div style='display:block;cursor:pointer;color:#f00'>${content}</div>`;
@@ -106,4 +117,7 @@ function formatArea(polygon) {
   return area;
 }
 
-export default { initialize, enable, disable };
+window.rectangle = {};
+window.rectangle.remove = remove;
+
+export default { initialize, enable, disable, removeAll };

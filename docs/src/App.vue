@@ -4,6 +4,7 @@
     <button @click="togglePolygon">画面</button>
     <button @click="toggleCircle">画圆</button>
     <button @click="toggleRentangle">画方</button>
+    <button @click="removeAll">清空</button>
   </div>
   <div id="map"></div>
 </template>
@@ -28,23 +29,30 @@ function mapInit() {
 }
 
 function toggleLines() {
-  drawMap.measure.polyline.initialize(gisMap);
+  drawMap.measure.polyline.initialize(gisMap, { showMarker: true });
   drawMap.measure.polyline.enable();
 }
 
 function togglePolygon() {
-  drawMap.measure.polygon.initialize(gisMap);
+  drawMap.measure.polygon.initialize(gisMap, { showMarker: true });
   drawMap.measure.polygon.enable();
 }
 
 function toggleCircle() {
-  drawMap.measure.circle.initialize(gisMap);
+  drawMap.measure.circle.initialize(gisMap, { showMarker: true });
   drawMap.measure.circle.enable();
 }
 
 function toggleRentangle() {
-  drawMap.measure.rectangle.initialize(gisMap);
+  drawMap.measure.rectangle.initialize(gisMap, { showMarker: true });
   drawMap.measure.rectangle.enable();
+}
+
+function removeAll() {
+  drawMap.measure.polyline.removeAll();
+  drawMap.measure.polygon.removeAll();
+  drawMap.measure.circle.removeAll();
+  drawMap.measure.rectangle.removeAll();
 }
 
 onMounted(async () => {

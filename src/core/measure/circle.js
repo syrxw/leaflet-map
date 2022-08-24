@@ -12,9 +12,9 @@ let layerGroup;
 let drawControl;
 let circleDrawer;
 
-let drawlayer = {};
-
+let drawLayer = {};
 let currentLayerId = null;
+
 function enable() {
   circleDrawer = new L.Draw.Circle(mapInstance, drawControl.options.draw.circle);
   circleDrawer.enable();
@@ -24,14 +24,15 @@ function disable() {
   circleDrawer?.disable();
 }
 
-function initialize(instance, options) {
+function initialize(instance, options = { showMarker: false }) {
   mapInstance = instance;
+
   layerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
 
   // 初始化图层数据
   currentLayerId = nanoid();
-  drawlayer[currentLayerId] = {
+  drawLayer[currentLayerId] = {
     point: new L.FeatureGroup(),
     shape: new L.FeatureGroup(),
   };
@@ -59,21 +60,24 @@ function initialize(instance, options) {
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
     event.layer.id = currentLayerId;
-    drawlayer[currentLayerId].shape = event.layer;
-    layerGroup.addLayer(drawlayer[currentLayerId].shape);
+    drawLayer[currentLayerId].shape = event.layer;
+    layerGroup.addLayer(drawLayer[currentLayerId].shape);
 
-    addMeasureMarker(event.layer._mRadius, event.layer._latlng);
+    if (options.showMarker) {
+      addMeasureMarker(event.layer.getRadius(), event.layer.getLatLng());
+    }
+
     emitter.emit("measure.circle.created", event);
   });
   mapInstance.off(L.Draw.Event.DRAWVERTEX);
 }
 
 function addMeasureMarker(radius, latlng) {
-  const marker = L.marker(latlng, { icon: L.divIcon({ className: "my-div-icon" }) });
+  const marker = L.marker(latlng, { icon: L.divIcon({ className: "measure-div-icon" }) });
   marker
     .bindTooltip(
       buildHtml(
-        `${formatArea(radius)}<div onclick="circle.deleteLine('${currentLayerId}')">删除</div>`
+        `${formatArea(radius)}<div onclick="circle.remove('${currentLayerId}')">删除</div>`
       ),
       {
         permanent: true,
@@ -83,24 +87,34 @@ function addMeasureMarker(radius, latlng) {
     )
     .openTooltip();
 
-  drawlayer[currentLayerId].point.addLayer(marker);
-  drawlayer[currentLayerId].point.addTo(mapInstance);
+  drawLayer[currentLayerId].point.addLayer(marker);
+  drawLayer[currentLayerId].point.addTo(mapInstance);
 }
 
-window.circle = {};
-window.circle.deleteLine = function (id) {
-  Object.keys(drawlayer[id]).forEach((item) => {
-    drawlayer[id][item].remove();
+function remove(id) {
+  Object.keys(drawLayer[id]).forEach((item) => {
+    drawLayer[id][item].remove();
   });
-};
+}
+
+function removeAll() {
+  Object.keys(drawLayer).forEach((item) => {
+    Object.keys(drawLayer[item]).forEach((sitem) => {
+      drawLayer[item][sitem].remove();
+    });
+  });
+}
 
 function buildHtml(content) {
   return `<div style='display:block;cursor:pointer;color:#f00'>${content}</div>`;
 }
 
 function formatArea(radius) {
-  let area = (radius / 1000).toFixed(2) + "k㎡";
+  let area = (Math.PI * Math.pow(radius / 1000, 2)).toFixed(2) + "k㎡";
   return area;
 }
 
-export default { initialize, enable, disable };
+window.circle = {};
+window.circle.remove = remove;
+
+export default { initialize, enable, disable, removeAll };

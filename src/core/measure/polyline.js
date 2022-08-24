@@ -11,7 +11,7 @@ let layerGroup;
 let drawControl;
 let polylineDrawer;
 
-let drawlayer = {};
+let drawLayer = {};
 let currentLayerId = null;
 
 function enable() {
@@ -23,14 +23,15 @@ function disable() {
   polylineDrawer?.disable();
 }
 
-function initialize(instance, options) {
+function initialize(instance, options = { showMarker: false }) {
   mapInstance = instance;
+
   layerGroup = new L.FeatureGroup();
   mapInstance.addLayer(layerGroup);
 
   // 初始化图层数据
   currentLayerId = nanoid();
-  drawlayer[currentLayerId] = {
+  drawLayer[currentLayerId] = {
     point: new L.FeatureGroup(),
     shape: new L.FeatureGroup(),
   };
@@ -60,27 +61,30 @@ function initialize(instance, options) {
 
   mapInstance.off(L.Draw.Event.CREATED).on(L.Draw.Event.CREATED, function (event) {
     event.layer.id = currentLayerId;
-    drawlayer[currentLayerId].shape = event.layer;
+    drawLayer[currentLayerId].shape = event.layer;
+    layerGroup.addLayer(drawLayer[currentLayerId].shape);
 
-    layerGroup.addLayer(drawlayer[currentLayerId].shape);
-
-    setTimeout(() => {
-      drawEndPoint();
-    }, 0);
+    if (options.showMarker) {
+      setTimeout(() => {
+        addMeasureEndMarker();
+      }, 0);
+    }
 
     emitter.emit("measure.polyline.created", event);
   });
 
   mapInstance.off(L.Draw.Event.DRAWVERTEX).on(L.Draw.Event.DRAWVERTEX, function (event) {
-    drawPoint(event.layers);
+    if (options.showMarker) {
+      addMeasureMarker(event.layers);
+    }
   });
 }
 
-function drawPoint(layerGroup) {
+function addMeasureMarker(layerGroup) {
   let lines = [];
 
   layerGroup.eachLayer((e) => {
-    lines.push(e._latlng);
+    lines.push(e.getLatLng());
 
     let content = lines.length <= 1 ? buildHtml("起点") : buildHtml(formatLength(lines));
     e.bindTooltip(content, {
@@ -90,24 +94,24 @@ function drawPoint(layerGroup) {
     }).openTooltip();
   });
 
-  drawlayer[currentLayerId].point = layerGroup;
+  drawLayer[currentLayerId].point = layerGroup;
 }
 
-function drawEndPoint() {
+function addMeasureEndMarker() {
   let i = 0;
   let lines = [];
 
-  const point = drawlayer[currentLayerId].point;
+  const point = drawLayer[currentLayerId].point;
   if (point) {
     point.eachLayer((e) => {
       i += 1;
-      lines.push(e._latlng);
-      if (i === Object.keys(point._layers).length) {
+      lines.push(e.getLatLng());
+      if (i === Object.keys(point.getLayers()).length) {
         e.setTooltipContent(
           buildHtml(
             "共" +
               formatLength(lines) +
-              "<div onclick='polyline.deleteLine(\"" +
+              "<div onclick='polyline.remove(\"" +
               currentLayerId +
               "\")'>删除</div>"
           )
@@ -119,12 +123,19 @@ function drawEndPoint() {
   mapInstance.addLayer(point);
 }
 
-window.polyline = {};
-window.polyline.deleteLine = function (id) {
-  Object.keys(drawlayer[id]).forEach((item) => {
-    drawlayer[id][item].remove();
+function remove(id) {
+  Object.keys(drawLayer[id]).forEach((item) => {
+    drawLayer[id][item].remove();
   });
-};
+}
+
+function removeAll() {
+  Object.keys(drawLayer).forEach((item) => {
+    Object.keys(drawLayer[item]).forEach((sitem) => {
+      drawLayer[item][sitem].remove();
+    });
+  });
+}
 
 function buildHtml(content) {
   return `<div style='display:block;cursor:pointer;color:#f00'>${content}</div>`;
@@ -140,4 +151,7 @@ function formatLength(line) {
   return `${(dis / 10e2).toFixed(2)}km`;
 }
 
-export default { initialize, enable, disable };
+window.polyline = {};
+window.polyline.remove = remove;
+
+export default { initialize, enable, disable, removeAll };

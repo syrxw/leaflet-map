@@ -29,7 +29,7 @@ L.drawLocal = {
         tooltip: {
           start: "单击并拖动以绘制圆", //'Click and drag to draw circle.'
         },
-        radius: "面积",
+        radius: "半径",
       },
       circlemarker: {
         tooltip: {
