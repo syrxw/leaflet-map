@@ -146,7 +146,7 @@ onMounted(() => {
 | disable()                        | -      | 关闭绘图                                              |
 | removeAll()                      | -      | 移除当前地图上该类型所有绘制图形                      |
 
-#### options initialize 方法参数
+##### options initialize 方法参数
 
 | 参数名     | 默认值 | 描述                 |
 | :--------- | :----- | :------------------- |
