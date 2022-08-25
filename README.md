@@ -105,7 +105,7 @@ onMounted(() => {
 | addPresetTileLayer(`options`) | -      | 加载地图底图 `options` 是地图配置参数 |
 | setFixView 暂未实现           | -      | 使地图缩放到适合大小                  |
 
-#### map.layer
+#### map.layer 图层
 
 | 方法名                           | 返回值        | 描述                                                         |
 | :------------------------------- | :------------ | :----------------------------------------------------------- |
@@ -113,7 +113,7 @@ onMounted(() => {
 | createWFSLayer(`options`,`data`) | geoJsonLayer  | 创建WFS图层  `options`是L.geojson 参数  `data` 是geojson数据 |
 | createWMSLayer(`options`)        | tileLayer     | 创建WMS图层  `options`是L.tileLayer.wms 参数                 |
 
-#### map.service
+#### map.service 服务(天地图)
 
 | 方法名                       | 返回值        | 描述                                                                                                                                              |
 | :--------------------------- | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -122,12 +122,32 @@ onMounted(() => {
 | getPoint(`options`)          | -             | 逆地理位置解析 基于[逆地理编码查询](http://lbs.tianditu.gov.cn/server/geocoding.html)    `options` 是天地图该api的所需配置参数                    |
 | getLocationByIp()            | Promise(data) | 根据IP获取地理位置                                                                                                                                |
 
-#### map.control
+#### map.control 组件
 
 | 方法名                        | 返回值 | 描述                                                |
 | :---------------------------- | :----- | :-------------------------------------------------- |
 | attributionControl(`options`) | -      | 水印组件 `options` 与Leaflet 对应control参数相同    |
 | zoomControl(`options`)        | -      | 缩放组件 `options` 与Leaflet 对应control参数相同    |
-| scaleControl 暂未实现         | -      | 比例尺组件  `options` 与Leaflet 对应control参数相同 |
+| scaleControl(`options`)       | -      | 比例尺组件  `options` 与Leaflet 对应control参数相同 |
 
-#### map.measure
+#### map.measure 测量工具
+
+提供了基础的测量工具，也可当做简单的绘制工具来使用
+
+* map.measure.polyline  测距
+* map.measure.polygon   测面
+* map.measure.circle    测圆
+* map.measure.rectangle 测方
+
+| 方法名                           | 返回值 | 描述                                                  |
+| :------------------------------- | :----- | :---------------------------------------------------- |
+| initialize(`instance`,`options`) | -      | 初始化 `instance`是地图实例，`options` 配置参数见下方 |
+| enable()                         | -      | 启动绘图                                              |
+| disable()                        | -      | 关闭绘图                                              |
+| removeAll()                      | -      | 移除当前地图上该类型所有绘制图形                      |
+
+#### options initialize 方法参数
+
+| 参数名     | 默认值 | 描述                 |
+| :--------- | :----- | :------------------- |
+| showMarker | false  | 是否显示测量结果标记 |
