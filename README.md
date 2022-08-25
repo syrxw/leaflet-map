@@ -92,8 +92,6 @@ onMounted(() => {
 
 `mapConfig.map` 这里可以传入除自身配置之外,`Leaflet Map`所提供的所有配置参数，内部对参数传递做了一个合并
 
-`mapConfig.control` 这里是对地图控制组件的参数配置，目前只提供了水印图和缩放组件配置，继承`Leaflet Control`配置
-
 
 ### API
 
