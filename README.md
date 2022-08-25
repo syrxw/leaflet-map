@@ -57,17 +57,6 @@ const mapConfig = {
     maxZoom: 18, // 最大缩放级别
     key: "6cb11577e3ac27bbe015669e413f6cc4", // 天地图秘钥
   },
-  control: {
-    addAttribution: {
-      enable: false, // 是否开启水印
-    },
-    zoom: {
-      enable: false, // 是否开启缩放组件
-    },
-    scale: {
-      enable: false, // 是否开启比例尺
-    },
-  },
 };
 ``` 
 
@@ -81,9 +70,9 @@ let gisMap = null
 
 onMounted(() => {
     // 创建地图实例
-    const gisMap = drawMap.createMap(mapConfig);
+    const gisMap = drawMap.createMap(mapConfig); // 内部读取的是"map"键名下的配置
     // 加载地图底图
-    drawMap.addPresetTileLayer(mapConfig);
+    drawMap.addPresetTileLayer(mapConfig); // 内部读取的是"map"键名下的配置
 })
 ``` 
 
@@ -132,3 +121,13 @@ onMounted(() => {
 | getLocation(`options`)       | -             | 地理位置解析经纬度 基于[地理位置解析查询](http://lbs.tianditu.gov.cn/server/geocodinginterface.html)   `options` 是天地图该api的所需配置参数      |
 | getPoint(`options`)          | -             | 逆地理位置解析 基于[逆地理编码查询](http://lbs.tianditu.gov.cn/server/geocoding.html)    `options` 是天地图该api的所需配置参数                    |
 | getLocationByIp()            | Promise(data) | 根据IP获取地理位置                                                                                                                                |
+
+#### map.control
+
+| 方法名                        | 返回值 | 描述                                                |
+| :---------------------------- | :----- | :-------------------------------------------------- |
+| attributionControl(`options`) | -      | 水印组件 `options` 与Leaflet 对应control参数相同    |
+| zoomControl(`options`)        | -      | 缩放组件 `options` 与Leaflet 对应control参数相同    |
+| scaleControl 暂未实现         | -      | 比例尺组件  `options` 与Leaflet 对应control参数相同 |
+
+#### map.measure
