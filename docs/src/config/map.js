@@ -3,7 +3,7 @@ export default {
     container: "map",
     type: "GaoDe.Brief.Map",
     center: [31.820591, 117.227219],
-    zoom: 12,
+    zoom: 16,
     // preferCanvas: true,
     minZoom: 6,
     maxZoom: 18,
