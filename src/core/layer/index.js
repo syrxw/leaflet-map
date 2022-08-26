@@ -39,10 +39,12 @@ export function createWMSLayer(options) {
     layers: options.layer,
     format: "image/png",
     transparent: true,
+    crs: L.CRS.EPSG4326,
     ...options,
   };
   if (options.crs) config.crs = options.crs;
   const wmsLayer = L.tileLayer.wms(options.url, config);
+  console.log(wmsLayer);
   return wmsLayer;
 }
 

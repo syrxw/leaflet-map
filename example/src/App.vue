@@ -105,12 +105,6 @@ onMounted(async () => {
   //   console.log(e);
   // });
 
-  // mapConfig.map.type = "TianDiTu.Satellite.Map";
-  // drawMap.addPresetTileLayer(mapConfig);
-
-  // mapConfig.map.type = "TianDiTu.Satellite.Annotion";
-  // drawMap.addPresetTileLayer(mapConfig);
-
   // let layerGroup = drawMap.createLayerGroup();
 
   // layerGroup.addTo(gisMap);
@@ -123,10 +117,10 @@ onMounted(async () => {
   let wmsLayer = drawMap.layer.createWMSLayer(params);
   wmsLayer.addTo(gisMap);
 
-  params.url = mapConfig.wfsUrl;
-  const data = await drawMap.layer.getGeoJson(params);
-  let wfsLayer = drawMap.layer.createWFSLayer({}, data);
-  wfsLayer.addTo(gisMap);
+  // params.url = mapConfig.wfsUrl;
+  // const data = await drawMap.layer.getGeoJson(params);
+  // let wfsLayer = drawMap.layer.createWFSLayer({}, data);
+  // wfsLayer.addTo(gisMap);
 
   try {
     const searchData = await drawMap.service.localSearch(gisMap, {
