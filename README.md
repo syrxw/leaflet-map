@@ -86,7 +86,10 @@ onMounted(() => {
 
 其中`providers` 对应的就是上面地图配置的`type` [文档地址](https://github.com/htoooth/Leaflet.ChineseTmsProviders#providers)
 
-在该插件的基础上，还新增了高德一种简化要素的类型地图，类型为`GaoDe.Brief.Map`
+在该插件的基础上，还新增了一些底图：
+
+* `GaoDe.Brief.Map` 高德一种简化要素的类型地图
+* `BaiduV3.Normal.Map` 百度高清底图
 
 #### 配置文件
 
