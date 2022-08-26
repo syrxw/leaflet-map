@@ -11,24 +11,41 @@
 
 <script setup>
 import { ref, onMounted, reactive } from "vue";
-import { map as drawMap, utils } from "../../lib/map-es";
-import "../../lib/map-es.css";
+
+import { map as drawMap, utils } from "../../lib/leaflet-map-es";
+import "../../lib/leaflet-map-es.css";
 import mapConfig from "./config/map";
 import request from "./utils/request";
 
 // import "./plugins/leaflet-tilelayer-colorizr";
 let gisMap;
 function mapInit() {
-  gisMap = drawMap.createMap(mapConfig);
-  // drawMap.addPresetTileLayer(mapConfig);
+  gisMap = drawMap.createMap({
+    map: {
+      ...mapConfig.map,
+    },
+  });
 
-  window.L.tileLayer(
-    "https://api.mapbox.com/styles/v1/osdwenyu/cl6oh94u9002w15mg25o0afsj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoib3Nkd2VueXUiLCJhIjoiY2w2b2g2bnllMDFxMzNjcGlwcXNxazRrNyJ9.QBEkrrQwNHRvBy81N5STAw",
-    {
-      maxZoom: 18,
-      minZoom: 1,
-    }
-  ).addTo(gisMap);
+  // window.L.tileLayer(
+  //   "http://api{s}.map.bdimg.com/customimage/tile?&x={x}&y={y}&z={z}&scale=2&customid=hardedge",
+  //   {
+  //     maxZoom: 18,
+  //     minZoom: 6,
+  //     tms: true,
+  //     crossOrigin: true,
+  //     subdomains: "012",
+  //   }
+  // ).addTo(gisMap);
+
+  drawMap.addPresetTileLayer(mapConfig);
+
+  // window.L.tileLayer(
+  //   "https://api.mapbox.com/styles/v1/osdwenyu/cl6oh94u9002w15mg25o0afsj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoib3Nkd2VueXUiLCJhIjoiY2w2b2g2bnllMDFxMzNjcGlwcXNxazRrNyJ9.QBEkrrQwNHRvBy81N5STAw",
+  //   {
+  //     maxZoom: 18,
+  //     minZoom: 1,
+  //   }
+  // ).addTo(gisMap);
 
   gisMap
     .addControl(drawMap.control.attributionControl())
@@ -64,17 +81,19 @@ function removeAll() {
 }
 
 onMounted(async () => {
-  await drawMap.service
-    .getLocationByIp()
-    .then((res) => {
-      if (res.code === 200) {
-        mapConfig.map.center = [res.data.lat, res.data.lng];
-        mapInit();
-      }
-    })
-    .catch((e) => {
-      mapInit();
-    });
+  // await drawMap.service
+  //   .getLocationByIp()
+  //   .then((res) => {
+  //     if (res.code === 200) {
+  //       mapConfig.map.center = [res.data.lat, res.data.lng];
+  //       mapInit();
+  //     }
+  //   })
+  //   .catch((e) => {
+  //     mapInit();
+  //   });
+
+  mapInit();
 
   // drawMap.measure.polygon.initialize(gisMap);
   // drawMap.measure.polygon.enable();

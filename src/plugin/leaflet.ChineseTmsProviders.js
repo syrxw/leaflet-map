@@ -143,6 +143,14 @@ L.TileLayer.ChinaProvider.providers = {
     tms: true,
   },
 
+  BaiduV3: {
+    Normal: {
+      Map: "//maponline{s}.bdimg.com/tile/?qt=vtile&x={x}&y={y}&z={z}&styles=pl&scaler=2&udt=&from=jsapi3_0",
+    },
+    Subdomains: "012",
+    tms: true,
+  },
+
   Tencent: {
     Normal: {
       Map: "//rt{s}.map.gtimg.com/tile?z={z}&x={x}&y={-y}&type=vector&styleid=3",

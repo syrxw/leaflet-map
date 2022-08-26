@@ -1,5 +1,9 @@
 import "leaflet";
 import "leaflet/dist/leaflet.css";
+
+import "proj4";
+import "proj4leaflet";
+
 import "@/plugin/leaflet.ChineseTmsProviders"; // 国内地图底图加载
 import "@/plugin/leaflet.mapCorrection"; // 坐标地图纠偏
 
@@ -13,6 +17,10 @@ let mapInstance = null;
  */
 export function createMap(options = config) {
   const { map: mapConfig } = options;
+
+  if (mapConfig.type.match("Baidu")) {
+    mapConfig.crs = L.CRS.Baidu;
+  }
   mapInstance = L.map(mapConfig.container, {
     attributionControl: false,
     zoomControl: false,

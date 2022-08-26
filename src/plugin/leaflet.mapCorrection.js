@@ -132,6 +132,9 @@ L.tileLayer.chinaProvider = function (type, options) {
       case "Baidu":
         zbName = "bd09";
         break;
+      case "BaiduV3":
+        zbName = "bd09";
+        break;
       case "OSM":
       case "TianDiTu":
         zbName = "wgs84";

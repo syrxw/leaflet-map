@@ -2,6 +2,7 @@
 import babel from "rollup-plugin-babel";
 import nodeResolve from "@rollup/plugin-node-resolve";
 import alias from "@rollup/plugin-alias";
+import { terser } from "rollup-plugin-terser";
 import scss from "rollup-plugin-scss";
 import dartSass from "sass";
 
@@ -16,11 +17,11 @@ export default {
   input: "src/index.js",
   output: [
     {
-      file: "lib/map-es.js",
+      file: "lib/leaflet-map-es.js",
       format: "es",
     },
     {
-      file: "lib/map-cjs.js",
+      file: "lib/leaflet-map-cjs.js",
       format: "cjs",
       exports: "named",
     },
@@ -41,6 +42,7 @@ export default {
     babel({
       exclude: "node_modules/**",
     }),
+    terser(),
   ],
   external: [
     "lodash-es",
@@ -52,5 +54,7 @@ export default {
     "leaflet-draw",
     "leaflet-draw/dist/leaflet.draw-src.css",
     "leaflet.chinatmsproviders",
+    "proj4",
+    "proj4leaflet",
   ],
 };

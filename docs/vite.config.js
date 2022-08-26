@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 7999,
+    host: "0.0.0.0",
     proxy: {
       "/api/geoserver": {
         target: "http://119.96.101.77:8081",
