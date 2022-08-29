@@ -18,6 +18,9 @@ import mapConfig from "./config/map";
 import request from "./utils/request";
 
 // import "./plugins/leaflet-tilelayer-colorizr";
+import "./plugins/leaflet.mask.js";
+import ks from "./mock/ks";
+
 let gisMap;
 function mapInit() {
   gisMap = drawMap.createMap({
@@ -46,6 +49,20 @@ function mapInit() {
   //     minZoom: 1,
   //   }
   // ).addTo(gisMap);
+
+  let wfsLayer = window.L.mask(ks, {}, gisMap);
+  // let wfsLayer = drawMap.layer.createWFSLayer({}, ks);
+  // wfsLayer.addTo(gisMap);
+  // gisMap.fitBounds(wfsLayer._bounds);
+
+  var latlngs = [
+    [53.73947776524085, 73.56312877462698],
+    [4.633901583549054, 73.56312877462698],
+    [4.633901583549054, 135.60186557058367],
+    [53.73947776524085, 135.60186557058367],
+  ];
+  // var polygon = L.polygon(latlngs, { color: "red" }).addTo(gisMap);
+  // gisMap.fitBounds(polygon.getBounds());
 
   gisMap
     .addControl(drawMap.control.attributionControl())
@@ -109,40 +126,40 @@ onMounted(async () => {
 
   // layerGroup.addTo(gisMap);
 
-  const params = {
-    layer: "gis:PE160_adjust",
-  };
+  // const params = {
+  //   layer: "gis:PE160_adjust",
+  // };
 
-  params.url = mapConfig.wmsUrl;
-  let wmsLayer = drawMap.layer.createWMSLayer(params);
-  wmsLayer.addTo(gisMap);
+  // params.url = mapConfig.wmsUrl;
+  // let wmsLayer = drawMap.layer.createWMSLayer(params);
+  // wmsLayer.addTo(gisMap);
 
   // params.url = mapConfig.wfsUrl;
   // const data = await drawMap.layer.getGeoJson(params);
   // let wfsLayer = drawMap.layer.createWFSLayer({}, data);
   // wfsLayer.addTo(gisMap);
 
-  try {
-    const searchData = await drawMap.service.localSearch(gisMap, {
-      tk: mapConfig.map.key,
-      keyWord: "软件公司",
-    });
+  // try {
+  //   const searchData = await drawMap.service.localSearch(gisMap, {
+  //     tk: mapConfig.map.key,
+  //     keyWord: "软件公司",
+  //   });
 
-    const locationData = await drawMap.service.getLocation({
-      tk: mapConfig.map.key,
-      keyWord: "软件公司",
-    });
+  //   const locationData = await drawMap.service.getLocation({
+  //     tk: mapConfig.map.key,
+  //     keyWord: "软件公司",
+  //   });
 
-    const pointData = await drawMap.service.getPoint({
-      tk: mapConfig.map.key,
-      lon: 109.40256809,
-      lat: 29.50410173,
-    });
+  //   const pointData = await drawMap.service.getPoint({
+  //     tk: mapConfig.map.key,
+  //     lon: 109.40256809,
+  //     lat: 29.50410173,
+  //   });
 
-    const testData = await drawMap.service.getLocationByIp();
-  } catch (error) {
-    console.log(error);
-  }
+  //   const testData = await drawMap.service.getLocationByIp();
+  // } catch (error) {
+  //   console.log(error);
+  // }
 });
 
 // utils.emitter.on("mapLoaded", () => {

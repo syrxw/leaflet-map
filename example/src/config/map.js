@@ -1,11 +1,11 @@
 export default {
   map: {
     container: "map",
-    type: "GaoDe.Normal.Map",
-    center: [29.495755, 109.4032717],
-    zoom: 12,
+    type: "Baidu.Normal.Map",
+    center: [31.394637, 120.975175],
+    zoom: 10,
     // preferCanvas: true,
-    minZoom: 6,
+    minZoom: 10,
     maxZoom: 18,
     key: "6cb11577e3ac27bbe015669e413f6cc4",
   },
