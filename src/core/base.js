@@ -38,13 +38,14 @@ export function createMap(options = config) {
  */
 export function addPresetTileLayer(options = config) {
   const { map: mapConfig } = options;
-  L.tileLayer
-    .chinaProvider(mapConfig.type, {
-      ...mapConfig,
-    })
-    .addTo(mapInstance);
+  const tileLayer = L.tileLayer.chinaProvider(mapConfig.type, {
+    ...mapConfig,
+  });
+  tileLayer.addTo(mapInstance);
 
   emitter.emit("tileLayerLoaded");
+
+  return tileLayer;
 }
 
 /**
