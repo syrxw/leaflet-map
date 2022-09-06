@@ -34,6 +34,12 @@ const routes = [
         name: "mapToggle",
         meta: { title: "自带底图切换", icon: "dashboard", affix: true },
       },
+      {
+        path: "/map/mask",
+        component: () => import("@/views/map/mask.vue"),
+        name: "mapMask",
+        meta: { title: "遮罩地图", icon: "dashboard", affix: true },
+      },
     ],
   },
 ];

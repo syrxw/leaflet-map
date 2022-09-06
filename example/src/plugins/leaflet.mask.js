@@ -4,9 +4,7 @@ window.L.Mask = window.L.LayerGroup.extend({
     weight: 2,
     fillColor: "#FFFFFF",
     fillOpacity: 1,
-
     interactive: false,
-
     fitBounds: true,
     restrictBounds: true,
   },
@@ -22,10 +20,6 @@ window.L.Mask = window.L.LayerGroup.extend({
         [73.5, 4],
         [135, 4],
         [135, 53.5],
-        // [-360, -90],
-        // [-360, 90],
-        // [360, 90],
-        // [360, -90],
       ],
     ];
 
