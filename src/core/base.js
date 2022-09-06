@@ -18,9 +18,6 @@ let mapInstance = null;
 export function createMap(options = config) {
   const { map: mapConfig } = options;
 
-  if (mapConfig.type.match("Baidu")) {
-    mapConfig.crs = L.CRS.Baidu;
-  }
   mapInstance = L.map(mapConfig.container, {
     attributionControl: false,
     zoomControl: false,

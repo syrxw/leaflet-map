@@ -1,8 +1,24 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+        @import "@/styles/common/_variables.scss";
+    `,
+      },
+    },
+  },
+  resolve: {
+    alias: [
+      { find: "@", replacement: resolve(__dirname, "src") },
+      { find: "@root", replacement: resolve(__dirname, "../") },
+    ],
+  },
   plugins: [vue()],
   server: {
     port: 7999,

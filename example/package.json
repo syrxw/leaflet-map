@@ -9,13 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@osdiot/leaflet-map": "^0.0.11-beta",
     "axios": "^0.27.2",
+    "element-plus": "^2.2.16",
+    "nanoid": "^4.0.0",
     "proj4": "^2.8.0",
     "proj4leaflet": "^1.0.2",
-    "vue": "^3.2.37"
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.0.0",
+    "sass": "^1.54.8",
+    "sass-loader": "^13.0.2",
     "vite": "^3.0.0"
   }
 }

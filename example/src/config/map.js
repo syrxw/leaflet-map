@@ -1,11 +1,11 @@
 export default {
   map: {
     container: "map",
-    type: "Baidu.Normal.Map",
+    type: "TianDiTu.Normal.Map",
     center: [31.394637, 120.975175],
     zoom: 10,
     // preferCanvas: true,
-    minZoom: 10,
+    minZoom: 3,
     maxZoom: 18,
     key: "6cb11577e3ac27bbe015669e413f6cc4",
   },

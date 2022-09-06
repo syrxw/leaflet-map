@@ -1,0 +1,5 @@
+.el-form-item__label {
+    &:after {
+        content: ":";
+    }
+}

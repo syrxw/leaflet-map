@@ -89,7 +89,7 @@ onMounted(() => {
 在该插件的基础上，还新增了一些底图：
 
 * `GaoDe.Brief.Map` 高德一种简化要素的类型地图
-* `BaiduV3.Normal.Map` 百度高清底图
+* `BaiduV3.Normal.Map` 百度高清底图  使用百度地图需要手动设置crs参数：`crs:L.CRS.Baidu`
 
 #### 配置文件
 
