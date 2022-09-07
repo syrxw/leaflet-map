@@ -5,19 +5,19 @@
 @import "./common/transition";
 
 :root {
-    --el-color-primary: #1890ff;
-    --el-border-radius-base: 2px;
-    --el-font-base: "-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji";
+  --el-color-primary: #1890ff;
+  --el-border-radius-base: 2px;
+  --el-font-base: "-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji";
 }
 
 body {
-    font-family: getCssVar("font-base");
-    background: #eff0f4;
-    font-size: getCssVar("font-size-base");
-    // font-weight: getCssVar("font-weight-primary");
-    color: getCssVar("color-text-primary");
-    margin: 0;
-    text-rendering: optimizelegibility;
+  font-family: getCssVar("font-base");
+  background: #eff0f4;
+  font-size: getCssVar("font-size-base");
+  // font-weight: getCssVar("font-weight-primary");
+  color: getCssVar("color-text-primary");
+  margin: 0;
+  text-rendering: optimizelegibility;
 }
 // 全局修改
 h1,
@@ -26,20 +26,27 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: getCssVar("font-weight-primary");
-    padding: 0;
-    margin: 0;
+  font-weight: getCssVar("font-weight-primary");
+  padding: 0;
+  margin: 0;
 }
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 // 去除浏览器自动填充的默认样式
 input:-internal-autofill-previewed,
 input:-internal-autofill-selected {
-    -webkit-text-fill-color: #333 !important;
-    transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-text-fill-color: #333 !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 @import "./frame/form";
 @import "./frame/table";
+
+.toggle-bar {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}

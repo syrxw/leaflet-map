@@ -118,13 +118,6 @@ function resetMapViewByCrs(crs) {
   z-index: 1;
 }
 
-.toggle-bar {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  z-index: 1000;
-}
-
 .my-div-icon {
   background-color: #f40;
 }
