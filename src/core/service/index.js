@@ -9,22 +9,20 @@ export async function localSearch(map, options) {
     .concat(Object.values(_northEast).reverse())
     .join();
 
+  // const mapBound = [-180, -90, 180, 90];
+
   if (!options.tk) {
     throw new Error("请传入正确的key");
   }
   const data = await api.tianditu.search({
-    ...options,
     level,
     mapBound,
     queryType: 1,
     start: 0,
+    ...options,
   });
 
-  if (data.status.infocode == 1000) {
-    return data;
-  } else {
-    throw new Error(data.status.cndesc);
-  }
+  return data;
 }
 
 // 地理位置解析
