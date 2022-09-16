@@ -163,6 +163,14 @@ L.TileLayer.ChinaProvider.providers = {
     },
     Subdomains: "0123",
   },
+
+  Mapbox: {
+    Satellite: {
+      Map: "//api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.webp?access_token={key}",
+    },
+    Subdomains: "0",
+    key: "pk.eyJ1Ijoib3Nkd2VueXUiLCJhIjoiY2w2b2g2bnllMDFxMzNjcGlwcXNxazRrNyJ9.QBEkrrQwNHRvBy81N5STAw",
+  },
 };
 
 L.tileLayer.chinaProvider = function (type, options) {
