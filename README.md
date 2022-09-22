@@ -70,7 +70,7 @@ let gisMap = null
 
 onMounted(() => {
     // 创建地图实例
-    const gisMap = drawMap.createMap(mapConfig); // 内部读取的是"map"键名下的配置
+    gisMap = drawMap.createMap(mapConfig); // 内部读取的是"map"键名下的配置
     // 加载地图底图
     drawMap.addPresetTileLayer(mapConfig); // 内部读取的是"map"键名下的配置
 })
