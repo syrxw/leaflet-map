@@ -20,14 +20,17 @@ function mapInit() {
   //   "https://api.mapbox.com/styles/v1/osdwenyu/cl6oh94u9002w15mg25o0afsj/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib3Nkd2VueXUiLCJhIjoiY2w2b2g2bnllMDFxMzNjcGlwcXNxazRrNyJ9.QBEkrrQwNHRvBy81N5STAw"
   // ).addTo(gisMap);
 
-  let wfsLayer = window.L.geoJson(lf, {
-    style: {
-      fill: true,
-      fillOpacity: 0.1,
-      weight: 2,
-      dashArray: "8, 8",
+  let wfsLayer = drawMap.layer.createWFSLayer(
+    {
+      style: {
+        fill: true,
+        fillOpacity: 0.1,
+        weight: 2,
+        dashArray: "8, 8",
+      },
     },
-  });
+    lf
+  );
   wfsLayer.addTo(gisMap);
 }
 

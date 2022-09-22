@@ -14,6 +14,7 @@
     "@turf/random": "^6.5.0",
     "axios": "^0.27.2",
     "element-plus": "^2.2.16",
+    "esri-leaflet": "^3.0.8",
     "leaflet-contextmenu": "^1.4.0",
     "nanoid": "^4.0.0",
     "proj4": "^2.8.0",

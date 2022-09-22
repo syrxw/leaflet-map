@@ -35,6 +35,12 @@ const routes = [
         meta: { title: "自带底图切换", icon: "dashboard", affix: true },
       },
       {
+        path: "/layer/esri",
+        component: () => import("@/views/layer/esri.vue"),
+        name: "layerEsri",
+        meta: { title: "基础地图", icon: "dashboard", affix: true },
+      },
+      {
         path: "/plugins/mask",
         component: () => import("@/views/plugins/mask.vue"),
         name: "pluginsMask",

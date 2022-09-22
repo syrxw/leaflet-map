@@ -29,6 +29,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      "/arcgis": {
+        target: "http://202.99.220.101:18399",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\//, ""),
+      },
     },
   },
 });
