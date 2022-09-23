@@ -7,7 +7,7 @@ import { ref, onMounted, reactive } from "vue";
 
 import { map as drawMap } from "@osdiot/leaflet-map";
 import mapConfig from "@/config/map";
-import { DynamicMapLayer } from "esri-leaflet";
+import { dynamicMapLayer, mapService } from "esri-leaflet";
 import request from "@/utils/request";
 
 let gisMap;
@@ -17,23 +17,37 @@ async function mapInit() {
   gisMap = drawMap.createMap(mapConfig);
   let tileLayer = drawMap.addPresetTileLayer(mapConfig);
 
-  // request.get("/arcgis/rest/services?f=json").then((res) => {
-  //   res.services.forEach((item) => {
-  //     if (item.type === "MapServer") {
-  //       new DynamicMapLayer({
-  //         url: `/arcgis/rest/services/${item.name}/MapServer`,
-  //         opacity: 1,
-  //         f: "jsapi",
-  //       }).addTo(gisMap);
-  //     }
-  //   });
+  request.get("/arcgis/rest/services?f=json").then((res) => {
+    res.services.forEach((item) => {
+      if (item.type === "MapServer") {
+        dynamicMapLayer({
+          url: `/arcgis/rest/services/${item.name}/MapServer`,
+          opacity: 1,
+          f: "jsapi",
+        }).addTo(gisMap);
+      }
+    });
+  });
+
+  // let testLayer = new dynamicMapLayer({
+  //   url: "/arcgis/rest/services/changzhiDistributiuon/MapServer",
+  //   opacity: 1,
+  //   f: "jsapi",
   // });
 
-  new DynamicMapLayer({
-    url: "/arcgis/rest/services/LinXpipe/MapServer",
-    opacity: 1,
-    f: "jsapi",
-  }).addTo(gisMap);
+  // testLayer.addTo(gisMap);
+
+  // var service = mapService({
+  //   url: "/arcgis/rest/services/JZpipe/MapServer",
+  // });
+
+  // service.query().run(function (error, featureCollection, response) {
+  //   if (error) {
+  //     console.log(error);
+  //     return;
+  //   }
+  //   console.log(featureCollection);
+  // });
 
   // new DynamicMapLayer({
   //   url: "/arcgis/rest/services/GXNYpipe/MapServer",
