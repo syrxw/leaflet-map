@@ -1,6 +1,6 @@
 {
-  "name": "@osdiot/leaflet-map",
-  "version": "0.0.13-beta",
+  "name": "leaflet-smap",
+  "version": "1.0.0",
   "description": "基于leaflet.js的二次封装",
   "main": "lib/leaflet-map-cjs.js",
   "module": "lib/leaflet-map-es.js",
@@ -9,14 +9,12 @@
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://192.168.6.20:81/osdiot/business_framework/osdwk-fronted/npm-packages/leaflet-map"
-  },
   "keywords": [
-    "map"
+    "map",
+    "leaflet",
+    "gis"
   ],
-  "author": "osdiot-fronted",
+  "author": "shuoma-fronted",
   "license": "ISC",
   "dependencies": {
     "@rollup/plugin-alias": "^3.1.9",

@@ -5,7 +5,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 
-import { map as drawMap } from "@osdiot/leaflet-map";
+import { map as drawMap } from "leaflet-smap";
 import mapConfig from "@/config/map";
 import { dynamicMapLayer, mapService } from "esri-leaflet";
 import request from "@/utils/request";
