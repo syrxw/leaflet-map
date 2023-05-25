@@ -1,7 +1,7 @@
 export default {
   map: {
     container: "map",
-    type: "Mapbox.Satellite.Map",
+    type: "GaoDe.Satellite.Map",
     center: [31.394637, 120.975175],
     zoom: 18,
     preferCanvas: true,

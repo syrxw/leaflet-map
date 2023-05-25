@@ -13,7 +13,7 @@
 ### 安装
 
 ```  
-npm i @osdiot/leaflet-map  
+npm i leaflet-smap  
 ```
 
 ### 开始使用
@@ -21,7 +21,7 @@ npm i @osdiot/leaflet-map
 #### 导入包文件
 
 ```js  
-import { map as drawMap, utils } from  "@osdiot/leaflet-map"
+import { map as drawMap, utils } from  "leaflet-smap"
 ```  
 
 `drawMap` 是地图核心模块，提供了地图初始化加载，以及其他一些地图相关的方法

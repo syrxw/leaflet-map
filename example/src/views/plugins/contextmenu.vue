@@ -5,7 +5,7 @@
 <script setup>
 import { ref, onMounted, reactive } from "vue";
 
-import { map as drawMap } from "@osdiot/leaflet-map";
+import { map as drawMap } from "leaflet-smap";
 
 import { randomPoint } from "@turf/random";
 

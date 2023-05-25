@@ -46,8 +46,8 @@ onMounted(async () => {
   z-index: 1;
 }
 
-.leaflet-zoom-animated img {
+/* .leaflet-zoom-animated img {
   filter: brightness(0.88) contrast(1.22) grayscale(0) hue-rotate(360deg) opacity(1) saturate(1.1)
     sepia(0.54) invert(0.9);
-}
+} */
 </style>
